@@ -1,0 +1,33 @@
+{
+  "name": "react-mfe-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/react-mfe-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/react-mfe-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "react-mfe:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "react-mfe:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "react-mfe:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/react-mfe-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "implicitDependencies": ["react-mfe"],
+  "tags": []
+}

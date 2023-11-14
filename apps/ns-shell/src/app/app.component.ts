@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
 
 @Component({
   standalone: true,
-  imports: [NxWelcomeComponent, RouterModule],
+  imports: [RouterModule],
   selector: 'ns-shell-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  template: `
+  <ul>
+    <li><a routerLink="/">Shell</a></li>
+    <li><a routerLink="/ng-mfe/home">Ng mfe</a></li>
+  </ul>
+
+  <router-outlet></router-outlet>
+`,
+  styles: [],
 })
 export class AppComponent {
   title = 'ns-shell';

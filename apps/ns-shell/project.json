@@ -7,23 +7,31 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nx/angular:webpack-browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/ns-shell",
         "index": "apps/ns-shell/src/index.html",
-        "browser": "apps/ns-shell/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/ns-shell/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/ns-shell/src/favicon.ico", "apps/ns-shell/src/assets"],
-        "styles": ["apps/ns-shell/src/styles.scss"],
+        "assets": [
+          "apps/ns-shell/src/favicon.ico",
+          "apps/ns-shell/src/assets"
+        ],
+        "styles": [
+          "apps/ns-shell/src/styles.scss"
+        ],
         "scripts": [],
-        "server": "apps/ns-shell/src/main.server.ts",
-        "prerender": true,
-        "ssr": {
-          "entry": "apps/ns-shell/server.ts"
-        }
+        "main": "apps/ns-shell/src/main.ts",
+        "customWebpackConfig": {
+          "path": "apps/ns-shell/webpack.config.js"
+        },
+        "commonChunk": false
       },
       "configurations": {
         "production": {
@@ -39,7 +47,10 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/ns-shell/webpack.prod.config.js"
+          }
         },
         "development": {
           "optimization": false,
@@ -50,33 +61,46 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@nx/angular:webpack-dev-server",
       "configurations": {
         "production": {
           "buildTarget": "ns-shell:build:production"
         },
         "development": {
-          "buildTarget": "ns-shell:build:development"
+          "buildTarget": "ns-shell:build:development",
+          "port": 4200
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4200,
+        "publicHost": "http://localhost:4200"
+      }
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "ngx-build-plus:extract-i18n",
       "options": {
-        "buildTarget": "ns-shell:build"
+        "buildTarget": "ns-shell:build",
+        "extraWebpackConfig": "apps/ns-shell/webpack.config.js"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["apps/ns-shell/**/*.ts", "apps/ns-shell/**/*.html"]
+        "lintFilePatterns": [
+          "apps/ns-shell/**/*.ts",
+          "apps/ns-shell/**/*.html"
+        ]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/ns-shell/jest.config.ts"
       }
