@@ -29,7 +29,7 @@ module.exports = {
         library: { type: "module" },
         name: "ns-shell",
 
-        // eager false reduces bundle size, but disallow direct access to the app
+        // eager false reduces bundle size, but disallows direct access to the app
         shared: share({
           "@angular/core": { singleton: true, strictVersion: true, requiredVersion: 'auto' , eager: true}, 
           "@angular/common": { singleton: true, strictVersion: true, requiredVersion: 'auto', eager: true}, 
